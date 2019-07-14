@@ -7,7 +7,8 @@ app = Flask(__name__)
 Markdown(app)
 
 site_all_notification='Welcome, this site is still being worked on. It should be complete sometime in August.'
-
+site_title='CALS Floor'
+footer='<small class="m-0 text-center text-white">CALS Floor 2019. This site is provided for informational purposes only and is not an official publication of the University of Idaho Housing and Residence Life, whose website can be found <a href="https://www.uidaho.edu/student-life/housing">here</a>. By using this site, you consent to the use of cookies.</small>'
 root_directory='/home/tylerhand/www.calsfloor.info/'
 analytics='''
 
@@ -19,7 +20,7 @@ def page_not_found(e):
 
 @app.errorhandler(500)
 def internal_server_error(e):
-    return redirect('/pages/errors/500'), 500
+    return render_template('500.html'), 500
 
 @app.route('/')
 def redirect_index():
@@ -34,7 +35,7 @@ def render_markdown(request_path):
     with open(path, 'r') as markdown_file:
         md = markdown_file.read()
         markdown_file.close()
-    return render_template('main_bootstrap_frame.html', md=md,site_all_notification=site_all_notification)
+    return render_template('main_bootstrap_frame.html', md=md,site_all_notification=site_all_notification,site_title=site_title,footer=footer)
 
 @app.route('/downloads/<path:file_path>')
 def send_a_file(file_path):
