@@ -45,7 +45,7 @@ def render_markdown(request_path):
     with open(path, 'r') as markdown_file:
         md = markdown_file.read()
         markdown_file.close()
-    return render_template('main_bootstrap_frame.html', md=md,site_all_notification=site_all_notification,site_title=site_title,footer=footer)
+    return render_template('main_bootstrap_frame.html', md=md,site_all_notification=site_all_notification,site_title=site_title,footer=footer,seo_author=seo_author,seo_description=seo_description)
 
 @app.route('/downloads/<path:file_path>')
 def send_a_file(file_path):
