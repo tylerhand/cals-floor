@@ -1,7 +1,7 @@
 ## About this Site
 ***
 This site was created to offer some guides and tips that you may (hopefully) find useful coming to UIdaho. It is coded, maintained and hosted by Tyler (your
-RA). If you would like to use this for a personal website, I have good news...its on Github and it is BSD licensed!
+RA). If you would like to use this for a personal website, I have good news...its on [Github and it is MIT licensed](https://github.com/tylerhand/cals-floor)!
 
 #### For Contributors:
 This site is written in Markdown, a markup language used commonly with python docs \(please note that this is standard markdown and not Github flavored Markdown.
