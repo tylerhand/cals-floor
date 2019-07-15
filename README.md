@@ -11,6 +11,13 @@ First, open a BASH console and imput the following command...
 
     git clone https://github.com/tylerhand/cals-floor
 
+This app runs on Flask with Flask-Markdown as a dependancy. You need to create a virtual environment and enter this list of commands...
+
+    mkvirtualenvwrapper Flask-Cals-Floor --python-/usr/bin/python3.7
+    cd cals-floor
+    pip install -r requirements.txt
+
+
 Now, create a new web app and choose "manual configuration". Next, go to your WSGI \(there is a link on the web tab\) and replace the contents with the
 following code. Replace <myusername> with your Pythonanywhere username.
 
