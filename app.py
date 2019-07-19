@@ -1,28 +1,27 @@
-from flask import Flask, render_template, redirect, abort, send_file
+from flask import Flask, render_template, redirect, abort, send_file, request
 from flaskext.markdown import Markdown
 import os.path
+from config import config
 
 
 app = Flask(__name__)
 Markdown(app)
 
-#Configuration
+site_title=config['site_title']
+site_all_notification=config['site_all_notification']
+footer='<small class="m-0 text-center text-white">'+config['footer_text']+'</small>'
+root_directory=config['root_directory']
+analytics=config['analytics']
+admin_password=config['admin_password']
+mail_password=config['mail_password']
+list_moderators=config['list_moderators']
+seo_author=config['seo_author']
+seo_description=config['seo_description']
 
-site_all_notification='Welcome, this site is still being worked on. It should be complete sometime in August.'
-#this is a banner that appears as a dismissable message on all pages. You can leave this blank for no banner.
 
-site_title='CALS Floor'
-footer='<small class="m-0 text-center text-white">CALS Floor 2019. This site is provided for informational purposes only and is not an official publication of the University of Idaho Housing and Residence Life, whose website can be found <a href="https://www.uidaho.edu/student-life/housing">here</a>. By using this site, you consent to the use of cookies.</small>'
-root_directory='/home/tylerhand/www.calsfloor.info/'
-analytics='''
-
-'''
-
-#SEO Information
-seo_author='"Tyler Hand"'
-seo_description='"Information for residents of the College of Agriculture, University of Idaho resident hall community."'
-
-#End of Configuration
+@app.errorhandler(403)
+def forbidden(e):
+    return render_template('403.html'), 403
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -52,3 +51,66 @@ def send_a_file(file_path):
     file_path=root_directory+'/documents/'+file_path
     return send_file(file_path)
 
+@app.route('/mailing-list/')
+def mailing_list_index():
+    return render_template('coming-soon.html')
+
+@app.route('/staff/')
+def staff_index():
+    site_title='Staff Pages - CALS Floor'
+    return render_template('staff-index.html',site_title=site_title)
+
+@app.route('/staff/interactions', methods=['GET','POST'])
+def staff_interactions():
+    page_header='Interaction Logs'
+    interactions_options=['August','September','October']
+    error=None
+    title='Interactions - CALS Floor'
+    ico_title='''
+    <link rel="icon" href="/static/uidaho.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="/static/uidaho.ico" type="image/x-icon"/>
+    <title>'''+title+'''</title>'''
+    if request.method == 'POST':
+        choice=request.form['choice']
+        if choice not in interactions_options:
+            error='That is not a valid selection, please try again'
+            return render_template('staff-pages-request.html',ico_title=ico_title,interactions_options=interactions_options,page_header=page_header,error=error)
+        if request.form['password'] == admin_password:
+            template_path='interactions/'+choice+'.html'
+            title='Interactions - Month of '+choice
+            ico_title='''
+            <link rel="icon" href="/static/uidaho.ico" type="image/x-icon"/>
+            <link rel="shortcut icon" href="/static/uidaho.ico" type="image/x-icon"/>
+            <title>'''+title+'''</title>'''
+            return render_template(template_path,ico_title=ico_title)
+        else:
+            error='Invalid password, please try again.'
+    return render_template('staff-pages-request.html',ico_title=ico_title,interactions_options=interactions_options,page_header=page_header,error=error)
+
+@app.route('/staff/mailing-list', methods=['GET','POST'])
+def staff_mailing_list():
+    import mailgun
+    site_title='Staff Pages - CALS Floor'
+    return render_template('staff-mailing-list.html',site_title=site_title,list_moderators=list_moderators)
+
+@app.route('/staff/mailing-list/help')
+def staff_mailing_list_docs():
+    site_title='Staff Pages - CALS Floor'
+    return render_template('staff-list-usage.html',site_title=site_title)
+
+@app.route('/staff/roster', methods=['GET','POST'])
+def staff_roster():
+    site_title='Staff Pages - CALS Floor'
+    page_header='Floor Roster (for the most current version, contact the Housing Office)'
+    error=None
+    _title='CALS Floor Roster'
+    ico_title='''
+    <link rel="icon" href="/static/uidaho.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="/static/uidaho.ico" type="image/x-icon"/>
+    <title>'''+_title+'''</title>'''
+    if request.method == 'POST':
+        if request.form['password'] == admin_password:
+            return render_template('roster/roster.html',site_title=site_title,ico_title=ico_title)
+        else:
+            error='Invalid password, please try again.'
+    return render_template('staff-pages-request.html',site_title=site_title,page_header=page_header,error=error)
