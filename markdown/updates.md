@@ -1,4 +1,4 @@
-### Updates \(and Important Dates\)
+### Important Information and Updates
 ***
 
-##### Welcome to University of Idaho! \(posted on July 9\)
+##### [check back soon, nothing has been posted yet]
