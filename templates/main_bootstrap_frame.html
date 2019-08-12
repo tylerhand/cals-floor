@@ -28,12 +28,6 @@ blockquote {
   background:#ffe333;
 }
   </style>
-  <script>
-      function clearBox(elementID)
-{
-    document.getElementById(elementID).innerHTML = "";
-}
-  </script>
 </head>
 
 <body id="page-top">
@@ -50,29 +44,47 @@ blockquote {
             <a class="nav-link" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/pages/events">Stuff to Do</a>
+            <a class="nav-link js-scroll-trigger" href="/pages/food-events">Entertainment/Food</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/pages/food">Places to Eat</a>
+            <a class="nav-link js-scroll-trigger" href="/pages/guides">Tips/Guides</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/pages/guides">Tips & Guides</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/pages/updates">Important Dates and Updates</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/pages/services">Resources</a>
+            <a class="nav-link js-scroll-trigger" href="/pages/updates">Important Info</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="/pages/faq">FAQ</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/mailing-list/">Mailing List</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="/pages/about">About</a>
-          </li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Resources
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/pages/services">Resources on Campus</a>
+            <a class="dropdown-item" href="/pages/scholarships-internships">Scholarships/Internships</a>
+            <a class="dropdown-item" href="/pages/clubs">CALS Clubs</a>
+            <a class="dropdown-item" href="/pages/american-degree-precheck">American FFA Degree Pre-Check</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="mailto:hand7029@vandals.uidaho.edu">Contact Your RA</a></li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Housing Links
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="https://www.uidaho.edu/student-life/housing/faq">Housing FAQs</a>
+            <a class="dropdown-item" href="https://www.uidaho.edu/student-life/housing/residence-halls/handbook-agreement">Move-In Agreement (rulebook)</a>
+            <a class="dropdown-item" href="https://auxiliaries.uidaho.edu/ServiceRequests/">Service Requests</a>
+            <a class="dropdown-item" href="https://iwanthousing.uidaho.edu">Housing Application</a></li>
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            More
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/pages/about">About</a>
+            <a class="dropdown-item" href="/pages/mailing-list">Mailing Lists</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="mailto:hand7029@vandals.uidaho.edu">Contact Your RA</a></li>
+        </div>
         </ul>
       </div>
     </div>
@@ -82,14 +94,20 @@ blockquote {
  </div>
 <section>
     <div class="container">
-    <div id="allsite_notification">
     {% if site_all_notification %}
-        <blockquote>{{site_all_notification | safe}} <button class="btn btn-warning" onclick="clearBox('allsite_notification')">Dismiss</button></blockquote><br>
-    </div>
+        {% for item in site_all_notification %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{item | safe}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+        {% endfor %}
     {% endif %}
     {% if md %}
         {{md | markdown}}
     {% endif %}
+    {% block content_middle %}{% endblock %}
     </div>
 </section>
 {% if footer %}

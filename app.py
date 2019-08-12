@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, abort, send_file, request
 from flaskext.markdown import Markdown
 import os.path
 from config import config
+import requests
 
 
 app = Flask(__name__)
@@ -51,9 +52,9 @@ def send_a_file(file_path):
     file_path=root_directory+'/documents/'+file_path
     return send_file(file_path)
 
-@app.route('/mailing-list/')
+@app.route('/mailing-list/',methods=['GET','POST'])
 def mailing_list_index():
-    return render_template('coming-soon.html')
+    return render_template('public-mailing-list-page.html',site_all_notification=site_all_notification,site_title=site_title,footer=footer,seo_author=seo_author,seo_description=seo_description)
 
 @app.route('/staff/')
 def staff_index():
@@ -89,8 +90,12 @@ def staff_interactions():
 
 @app.route('/staff/mailing-list', methods=['GET','POST'])
 def staff_mailing_list():
-    import mailgun
     site_title='Staff Pages - CALS Floor'
+    if request.method == 'POST':
+        if request.form['password'] == admin_password or mail_password:
+            selected_emails = request.form['selected']
+            send_m
+        return render_template('staff-mailing-list.html',site_title=site_title,list_moderators=list_moderators, error=error)
     return render_template('staff-mailing-list.html',site_title=site_title,list_moderators=list_moderators)
 
 @app.route('/staff/mailing-list/help')
