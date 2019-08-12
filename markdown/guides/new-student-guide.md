@@ -1,4 +1,4 @@
-## Welcome to the University of Idaho and CALS Floor Website!
+### New Student Guide: Welcome to the University of Idaho!
 ***
 <small>Here are some things to help get you ready for the first day of classes. I am also happy to answer any questions \(you can email me under the "more" tab.\)</small>
 ***
