@@ -1,0 +1,7 @@
+__pycache__
+config.py
+config.pyc
+roster.html
+interactions
+*.pyc
+/.idea
